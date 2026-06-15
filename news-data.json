@@ -1,0 +1,82 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "title": "New Phishing Campaign Targets Banking Customers via SMS",
+      "summary": "Attackers are sending fake SMS messages impersonating major banks, directing victims to lookalike login pages designed to steal credentials and OTPs.",
+      "source": "Krebs on Security",
+      "category": "Phishing",
+      "severity": "high",
+      "date": "2026-06-14",
+      "tags": ["smishing", "banking", "credential theft"],
+      "url": "https://krebsonsecurity.com"
+    },
+    {
+      "id": 2,
+      "title": "Critical Zero-Day Found in Popular VPN Software",
+      "summary": "Security researchers disclosed a critical remote code execution vulnerability affecting millions of VPN users worldwide. Patch immediately.",
+      "source": "The Hacker News",
+      "category": "Vulnerability",
+      "severity": "critical",
+      "date": "2026-06-13",
+      "tags": ["zero-day", "RCE", "VPN"],
+      "url": "https://thehackernews.com"
+    },
+    {
+      "id": 3,
+      "title": "Ransomware Group Leaks 2M Records from Healthcare Provider",
+      "summary": "A ransomware gang has published sensitive patient data after the healthcare provider refused to pay a $4M ransom demand.",
+      "source": "BleepingComputer",
+      "category": "Ransomware",
+      "severity": "critical",
+      "date": "2026-06-12",
+      "tags": ["ransomware", "healthcare", "data breach"],
+      "url": "https://bleepingcomputer.com"
+    },
+    {
+      "id": 4,
+      "title": "Google Rolls Out Passkey Support Across All Platforms",
+      "summary": "Google has expanded passkey authentication to all supported platforms, making passwordless login the default for new accounts.",
+      "source": "Google Security Blog",
+      "category": "Authentication",
+      "severity": "low",
+      "date": "2026-06-11",
+      "tags": ["passkeys", "authentication", "passwordless"],
+      "url": "https://security.googleblog.com"
+    },
+    {
+      "id": 5,
+      "title": "AI-Powered Phishing Emails Now Bypass Traditional Filters",
+      "summary": "New research shows GPT-generated phishing emails have a 60% higher click-through rate than manually crafted ones, evading most email security gateways.",
+      "source": "Dark Reading",
+      "category": "Phishing",
+      "severity": "high",
+      "date": "2026-06-10",
+      "tags": ["AI", "phishing", "email security"],
+      "url": "https://darkreading.com"
+    },
+    {
+      "id": 6,
+      "title": "CISA Issues Warning on Active Exploitation of Apache Flaw",
+      "summary": "CISA added a critical Apache HTTP Server vulnerability to its Known Exploited Vulnerabilities catalog, urging federal agencies to patch within 48 hours.",
+      "source": "CISA",
+      "category": "Vulnerability",
+      "severity": "critical",
+      "date": "2026-06-09",
+      "tags": ["Apache", "CISA", "patch"],
+      "url": "https://cisa.gov"
+    }
+  ],
+  "testUrls": [
+    { "url": "https://google.com", "expected": "safe" },
+    { "url": "http://paypa1.com", "expected": "phishing" },
+    { "url": "https://facebook.com", "expected": "safe" },
+    { "url": "http://192.168.1.1/login", "expected": "phishing" },
+    { "url": "https://amaz0n-verify.com", "expected": "phishing" },
+    { "url": "https://github.com", "expected": "safe" },
+    { "url": "http://secure-bankofamerica.tk", "expected": "phishing" },
+    { "url": "https://microsoft.com", "expected": "safe" },
+    { "url": "http://netflix-account-suspended.xyz", "expected": "phishing" },
+    { "url": "https://linkedin.com", "expected": "safe" }
+  ]
+}

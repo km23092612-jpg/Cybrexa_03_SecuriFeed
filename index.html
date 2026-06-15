@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecuriFeed — PhishDetect</title>
+  <meta name="description" content="Real-time phishing URL analyzer with risk scoring, pattern detection, SSL checks and cybersecurity news feed." />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/analyzer.css" />
+  <link rel="stylesheet" href="css/news.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── THREAT TICKER ──────────────────────────── -->
+  <div class="threat-ticker">
+    <span class="threat-ticker__label mono">LIVE THREATS</span>
+    <div class="threat-ticker__track">
+      <div class="threat-ticker__inner" id="tickerInner">
+        <span>🚨 Phishing campaign targeting PayPal users detected</span>
+        <span>⚠️ New typosquatting domain: amaz0n-secure.com flagged</span>
+        <span>🔴 IP-based redirect attack on banking portals active</span>
+        <span>⚠️ SMS phishing wave targeting Indian mobile users</span>
+        <span>🚨 Fake Microsoft login pages spiking — 340 new domains today</span>
+        <span>🔴 Lookalike domain: g00gle.com — AVOID</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NAV ────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="#" class="nav__logo">
+        <div class="nav__logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z" fill="none" stroke="#FF6B35" stroke-width="1.5"/>
+            <path d="M9 12l2 2 4-4" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span>SecuriFeed</span>
+        <span class="nav__logo-tag mono">PhishDetect</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="#analyzer">Analyzer</a></li>
+        <li><a href="#news">Threat Feed</a></li>
+        <li><a href="#game">Quiz</a></li>
+        <li><a href="#learn">Learn</a></li>
+      </ul>
+      <div class="nav__threat-count">
+        <span class="pulse-dot"></span>
+        <span class="mono" id="navThreatCount">0 threats analyzed</span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────── -->
+  <section class="hero" id="home">
+    <div class="hero__scanlines"></div>
+    <div class="container hero__inner">
+      <div class="hero__left">
+        <p class="hero__eyebrow mono">// Project 03 · Cybrexa · Intermediate</p>
+        <h1 class="hero__title">
+          Don't get<br/>
+          <span class="hero__title-highlight">hooked.</span>
+        </h1>
+        <p class="hero__sub">Paste any URL. SecuriFeed scores it for phishing risk in real time — checking patterns, SSL, typosquatting, IP redirects, and 15+ threat signals.</p>
+        <div class="hero__quick-scan">
+          <input type="url" id="heroUrlInput" class="hero__url-input" placeholder="https://suspicious-link.com" spellcheck="false" autocomplete="off" />
+          <button class="btn btn--danger" id="heroScanBtn">Scan URL →</button>
+        </div>
+        <div class="hero__examples">
+          <span class="mono">Try:</span>
+          <button class="example-pill" data-url="http://paypa1.com/login">paypa1.com</button>
+          <button class="example-pill" data-url="http://192.168.1.1/verify">IP login</button>
+          <button class="example-pill" data-url="https://google.com">google.com</button>
+          <button class="example-pill" data-url="http://amaz0n-verify.net">amaz0n-verify</button>
+        </div>
+      </div>
+      <div class="hero__right">
+        <div class="threat-globe">
+          <div class="globe-ring globe-ring--1"></div>
+          <div class="globe-ring globe-ring--2"></div>
+          <div class="globe-ring globe-ring--3"></div>
+          <div class="globe-core">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z" fill="rgba(255,107,53,0.2)" stroke="#FF6B35" stroke-width="1.2"/>
+              <path d="M9 12l2 2 4-4" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="threat-dot" style="top:20%;left:30%"></div>
+          <div class="threat-dot" style="top:60%;left:70%"></div>
+          <div class="threat-dot" style="top:40%;left:80%"></div>
+          <div class="threat-dot" style="top:75%;left:25%"></div>
+          <div class="threat-dot" style="top:15%;left:65%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ANALYZER ───────────────────────────────── -->
+  <section class="section analyzer-section" id="analyzer">
+    <div class="container">
+      <p class="section__eyebrow mono">// phish.analyze(url)</p>
+      <h2 class="section__title">URL Risk Analyzer</h2>
+      <p class="section__desc">Paste any URL to get a full risk breakdown — 15+ signals checked instantly, no data sent to servers.</p>
+
+      <div class="analyzer__card">
+        <div class="analyzer__input-row">
+          <input type="url" id="analyzerInput" class="analyzer__input" placeholder="Paste URL to analyze — e.g. http://paypa1-login.com/verify" spellcheck="false" autocomplete="off" />
+          <button class="btn btn--danger" id="analyzeBtn">Analyze</button>
+          <button class="btn btn--ghost" id="clearBtn">Clear</button>
+        </div>
+
+        <!-- Result Panel -->
+        <div class="analyzer__result" id="analyzerResult" hidden>
+
+          <!-- Score gauge -->
+          <div class="result__top">
+            <div class="gauge" id="gauge">
+              <svg class="gauge__svg" viewBox="0 0 120 80">
+                <path class="gauge__track" d="M10,70 A60,60 0 0,1 110,70" fill="none" stroke-width="10" stroke-linecap="round"/>
+                <path class="gauge__fill" id="gaugeFill" d="M10,70 A60,60 0 0,1 110,70" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 188"/>
+                <text x="60" y="65" text-anchor="middle" class="gauge__score" id="gaugeScore">0</text>
+                <text x="60" y="78" text-anchor="middle" class="gauge__label" id="gaugeLabel">—</text>
+              </svg>
+            </div>
+            <div class="result__verdict" id="resultVerdict">
+              <div class="verdict-badge" id="verdictBadge"></div>
+              <p class="result__url mono" id="resultUrl"></p>
+              <p class="result__summary" id="resultSummary"></p>
+            </div>
+          </div>
+
+          <!-- Signal breakdown -->
+          <div class="signals" id="signalsPanel">
+            <h3 class="signals__title mono">// signal breakdown</h3>
+            <div class="signals__grid" id="signalsGrid"></div>
+          </div>
+
+          <!-- SSL info -->
+          <div class="ssl-panel" id="sslPanel">
+            <h3 class="mono">// ssl.check()</h3>
+            <div class="ssl-info" id="sslInfo"></div>
+          </div>
+
+          <!-- Recommendation -->
+          <div class="recommendation" id="recommendation"></div>
+        </div>
+
+        <!-- Test URLs -->
+        <div class="test-urls" id="testUrlsPanel">
+          <p class="mono test-urls__label">// test with known URLs (accuracy benchmark)</p>
+          <div class="test-urls__grid" id="testUrlsGrid"></div>
+          <button class="btn btn--ghost btn--sm" id="runAllTests">▶ Run All Tests</button>
+          <div class="accuracy-bar" id="accuracyBar" hidden>
+            <span class="mono">Accuracy: </span>
+            <span class="accent" id="accuracyScore"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NEWS FEED ──────────────────────────────── -->
+  <section class="section news-section" id="news">
+    <div class="container">
+      <p class="section__eyebrow mono">// threat.feed()</p>
+      <h2 class="section__title">Live Threat Intelligence</h2>
+      <div class="news__filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Phishing">Phishing</button>
+        <button class="filter-btn" data-filter="Vulnerability">Vulnerabilities</button>
+        <button class="filter-btn" data-filter="Ransomware">Ransomware</button>
+        <button class="filter-btn" data-filter="Authentication">Auth</button>
+      </div>
+      <div class="news__grid" id="newsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ── PHISHING QUIZ ──────────────────────────── -->
+  <section class="section game-section" id="game">
+    <div class="container">
+      <p class="section__eyebrow mono">// game.start()</p>
+      <h2 class="section__title">Phish or Legit? — Quiz</h2>
+      <p class="section__desc">Can you spot the phishing URL? Test your eye before attackers fool you for real.</p>
+      <div class="game__card" id="gameCard">
+        <div class="game__score-row">
+          <span class="mono">Score: <span class="accent" id="gameScore">0</span></span>
+          <span class="mono">Round: <span id="gameRound">1</span>/10</span>
+          <span class="mono">Streak: <span class="accent" id="gameStreak">0</span> 🔥</span>
+        </div>
+        <div class="game__question" id="gameQuestion">
+          <p class="game__prompt">Is this URL safe or a phishing attempt?</p>
+          <div class="game__url-display mono" id="gameUrl"></div>
+        </div>
+        <div class="game__choices">
+          <button class="game-btn game-btn--safe" id="btnSafe">✅ Legit</button>
+          <button class="game-btn game-btn--phish" id="btnPhish">🎣 Phishing</button>
+        </div>
+        <div class="game__feedback" id="gameFeedback" hidden></div>
+        <div class="game__result" id="gameResult" hidden>
+          <h3>Quiz Complete!</h3>
+          <p>You scored <span class="accent" id="finalScore"></span> out of 10</p>
+          <p id="resultMessage"></p>
+          <button class="btn btn--danger" id="restartGame">Play Again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LEARN ──────────────────────────────────── -->
+  <section class="section learn-section" id="learn">
+    <div class="container">
+      <p class="section__eyebrow mono">// learn.phishing()</p>
+      <h2 class="section__title">Phishing Detection Guide</h2>
+      <div class="learn__grid">
+        <div class="learn-card">
+          <span class="learn-card__num mono">01</span>
+          <h3>Typosquatting</h3>
+          <p>Attackers register domains that look like real ones — <span class="mono danger">paypa<strong>1</strong>.com</span> vs <span class="mono safe">paypal.com</span>. Look for number substitutions (0→o, 1→l) and extra words.</p>
+        </div>
+        <div class="learn-card">
+          <span class="learn-card__num mono">02</span>
+          <h3>IP Address URLs</h3>
+          <p>Legitimate sites use domain names — never raw IPs like <span class="mono danger">http://192.168.1.1/login</span>. An IP in a URL is almost always a red flag.</p>
+        </div>
+        <div class="learn-card">
+          <span class="learn-card__num mono">03</span>
+          <h3>HTTP vs HTTPS</h3>
+          <p>Phishing sites often use <span class="mono danger">http://</span> (no padlock). While HTTPS doesn't guarantee safety, HTTP on a login page is always suspicious.</p>
+        </div>
+        <div class="learn-card">
+          <span class="learn-card__num mono">04</span>
+          <h3>Suspicious TLDs</h3>
+          <p>Domains ending in <span class="mono danger">.xyz .tk .ml .gq .cf</span> are free and commonly abused by phishers. Treat them with extra suspicion.</p>
+        </div>
+        <div class="learn-card">
+          <span class="learn-card__num mono">05</span>
+          <h3>Keyword Stuffing</h3>
+          <p>URLs like <span class="mono danger">secure-paypal-verify-login.com</span> cram in trust words to fool you. Real PayPal uses <span class="mono safe">paypal.com</span> — nothing more.</p>
+        </div>
+        <div class="learn-card">
+          <span class="learn-card__num mono">06</span>
+          <h3>Long Subdomains</h3>
+          <p><span class="mono danger">paypal.com.account-verify.malicious.net</span> — the real domain is <strong>malicious.net</strong>. Read URLs right-to-left from the first single slash.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <p class="mono" style="color:var(--text-muted)">// © 2026 SecuriFeed · Cybrexa Project 03</p>
+        <p class="footer__sub">All URL analysis runs locally — zero data sent to servers.</p>
+      </div>
+      <div class="footer__links">
+        <a href="https://github.com/km23092612-jpg/Cybrexa_03_SecuriFeed" target="_blank" class="footer-link">GitHub</a>
+        <a href="SECURITY.md" class="footer-link">SECURITY.md</a>
+        <a href="#home" class="footer-link">↑ Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/analyzer.js"></script>
+  <script src="js/news-feed.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
