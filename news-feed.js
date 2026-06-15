@@ -10,7 +10,7 @@
   let allNews = [];
 
   try {
-    const res  = await fetch('data/news-data.json');
+    const res = await fetch('news-data.json');
     const data = await res.json();
     allNews = data.news;
     renderNews(allNews);
